@@ -1,18 +1,17 @@
 import odrive
 
 print("Configuring odrive")
-
 odrv0 = odrive.find_any(timeout=5)
 if str(odrv0) == "None":
     print("Didn't find an odrive :(")
 else:
     print("Found an odrive!")
     print("Bus voltage is: ", str(odrv0.vbus_voltage))
-
+odrv0.erase_configuration()
 # set the limits
 odrv0.axis0.motor.config.current_lim = 5 # [A]
 odrv0.axis0.controller.config.vel_limit = 10 # [turns per second]
-odrv0.axis0.motor.config.calibration_current = 3 # [A]
+odrv0.axis0.motor.config.calibration_current = 10 # [A]
 print("set the limits")
 
 # set other hardware parameters

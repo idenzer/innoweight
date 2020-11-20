@@ -17,13 +17,10 @@ print("set the limits")
 
 # set other hardware parameters
 odrv0.config.brake_resistance = 0 # [ohm]
-odrv0.axis0.motor.config.pole_pairs = 7 * 5 # times 5 to compensate for encoder
+odrv0.axis0.motor.config.pole_pairs = 7 * (34/7) # times gear ratio to compensate for encoder
 odrv0.axis0.motor.config.torque_constant = 8.27 / 140
-odrv0.axis0.motor.config.motor_type = 
+#print(odrv0.axis0.motor.config.motor_type)
+odrv0.axis0.encoder.config.cpr = 8192
 print("set the hardware parameters")
 
-
 odrv0.save_configuration() 
-
-
-<odrv>.<axis>.motor.config.current_lim = <Float>

@@ -7,4 +7,5 @@ else:
     print("Found an odrive!")
     print("Bus voltage is: ", str(odrv0.vbus_voltage))
 
-odrv0.axis0.requested_state = 3
+odrv0.axis0.requested_state = 3 #3 is state for calibration
+

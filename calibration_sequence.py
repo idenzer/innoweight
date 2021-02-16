@@ -15,8 +15,6 @@ answer = input("Only run this if the motor is not calibrated and the motor has m
 if answer != "Yes":
     quit()
 
-# 1)Motor calibration 2)Encoder index calibration 3)Encoder calibration
-
 # 1) Motor calibration
 odrv0.axis0.motor.config.pre_calibrated = False # Disregard any previous motor calibration
 odrv0.axis0.requested_state = 4 # AXIS_STATE_MOTOR_CALIBRATION. Measure phase resistance and inductance

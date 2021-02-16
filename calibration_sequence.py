@@ -10,9 +10,10 @@ else:
 
 # DO NOT RUN THIS IF WE HAVENT CHANGED ANYTHING MECHANICALLY!!!!!!
 # Only run this with minimal friction / connections to the motor
-answer = input("Only run this if the motor is not calibrated and the motor has minimal frication / mechanical connections. Type \"Yes\" to continue")
+answer = input("Only run this if the motor is not calibrated and the motor has minimal frication / mechanical connections. Type \"Yes\" to continu\n>")
 
 if answer != "Yes":
+    print("Quitted")
     quit()
 
 # 1) Motor calibration

@@ -10,7 +10,7 @@ else:
 
 g=9.8
 first_reduction = 4.8
-spool_width = .1524 #.127 if 5in can't remember
+spool_width = .1524/2 #.127 if 5in can't remember
 
 while True:
 	
@@ -22,7 +22,7 @@ while True:
 
 	force = desired_weight*g + desired_weight*g*accel
 
-	spool_torque = force/.1524
+	spool_torque = force/spool_width
 
 	motor_torque = spool_torque/first_reduction
 

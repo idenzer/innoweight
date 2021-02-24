@@ -12,6 +12,11 @@ g=9.8
 first_reduction = 4.8
 spool_width = .1524/2 #.127 if 5in can't remember
 
+"""
+We need to use threading to plot and run at the same time
+I ain't setting that up rn
+cancellation_token = start_liveplotter(axis0.motor.current_control.Iq_measured)
+"""
 while True:
 	
 	#some acceleration that is to be read in depending on how we implement it

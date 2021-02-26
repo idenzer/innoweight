@@ -1,3 +1,4 @@
+
 import odrive
 
 print("Configuring odrive")
@@ -27,5 +28,3 @@ print("set the hardware parameters")
 
 
 odrv0.save_configuration() 
-
-

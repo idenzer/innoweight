@@ -5,7 +5,9 @@ lbs_to_kgs = 0.45359
 inch_to_meter = 0.0254
 #globals
 g=9.8
-gear_ratio = 4.8
+stage_one_ratio = 4.8
+stage_two_ratio = 7
+gear_ratio = stage_one_ratio * stage_two_ratio
 spool_diameter_inch = 6;
 spool_diameter_meter = spool_diameter_inch * inch_to_meter
 spool_radius_meter = spool_diameter_meter/2
@@ -60,10 +62,7 @@ def calculate_current(desired_weight, numMotors=1, use_acceleration=True):
 	else:
 		current = (kgweight*(g)*spool_radius_meter)/(gear_ratio*kt)
 
-	if numMotors == 2:
-		return current/2
-
-	return current
+	return current/numMotors
 
 def read_acceleration():
 	return 0
@@ -75,6 +74,7 @@ def begin_weight(desired_weight):
     odrv0.axis0.requested_state = 8 
 
     ramp_to_weight(desired_weight, 5)
+    return
 
 def ramp_to_weight(weight, time_to_weight):
 	target_current = calculate_current(desired_weight, use_acceleration=False)

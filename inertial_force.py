@@ -1,16 +1,20 @@
 import odrive
 import time
+import math
+
 #conversions
 lbs_to_kgs = 0.45359
 inch_to_meter = 0.0254
 #globals
 g=9.8
 stage_one_ratio = 4.8
-stage_two_ratio = 7
+stage_two_ratio = 6
 gear_ratio = stage_one_ratio * stage_two_ratio
 spool_diameter_inch = 6;
 spool_diameter_meter = spool_diameter_inch * inch_to_meter
 spool_radius_meter = spool_diameter_meter/2
+spool_circumference_inch = spool_diameter_inch * math.pi
+spool_circumference_meter = spool_diameter_meter *math.pi
 kt = 0.059
 max_current_limit = 5 #be careful, this is scary
 
@@ -65,7 +69,15 @@ def calculate_current(desired_weight, numMotors=1, use_acceleration=True):
 	return current/numMotors
 
 def read_acceleration():
-	return 0
+    velo_time_step = 0.1 #seconds
+    motor_turn1 = odrv0.axis0.vel_estimate
+    time.sleep(velo_time_step) # waits 0.1 seconds to get second velocity
+    motor_turn2 = odrv0.axis0.vel_estimate
+    travel_velocity1 = motor_turn1/stage_one_ratio/stage_two_ratio * spool_circumference_meter
+    travel_velocity2 = motor_turn2/stage_one_ratio/stage_two_ratio * spool_circumference_meter
+        
+	return (travel_velocity2-travel_velocity1)/velo_time_step
+
 
 def begin_weight(desired_weight):
 

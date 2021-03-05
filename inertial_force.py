@@ -21,8 +21,6 @@ kt = 0.059
 max_current_limit = 5 #be careful, this is scary
 
 
-
-
 def main():
     global odrv0
     find_odrive()
@@ -104,6 +102,7 @@ def read_acceleration():
 
 def begin_weight(desired_weight):
     global odrv0
+    print(desired_weight)
     odrv0.axis0.motor.config.current_lim = 10 # max current
     odrv0.axis0.motor.config.curren_lim_margin = 15
     odrv0.axis0.controller.config.control_mode = 3 # torque control
@@ -127,9 +126,6 @@ def ramp_to_weight(weight, time_to_weight):
         return True
     return False
 
-"""
-"""
-if __name__ = __main__:
+
+if __name__ == '__main__':
     main()
-"""
-"""

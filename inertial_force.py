@@ -20,21 +20,16 @@ spool_circumference_meter = spool_diameter_meter *math.pi
 kt = 0.059
 max_current_limit = 5 #be careful, this is scary
 
-"""
-"""
-if __name__ = __main__:
-    main()
-"""
-"""
 
 
-def main:
+
+def main():
     global odrv0
     find_odrive()
     check_calibration()
 
     try:
-        cancellation_token = start_liveplotter(lambda: [axis0.motor.current_control.Iq_measured])
+        cancellation_token = odrive.utils.start_liveplotter(lambda: [axis0.motor.current_control.Iq_measured])
         pos_start = odrv0.axis0.encoder.pos_estimate #maybe make this its own function for setting the lowpoint
         #turning on the machine (make sure the cable is spooled to the correct point)
         desired_weight = input("Weight (lbs): ")
@@ -131,3 +126,10 @@ def ramp_to_weight(weight, time_to_weight):
     if current > target_current-0.1: #checks to see if you reached the intended weight or maxed out the current limit
         return True
     return False
+
+"""
+"""
+if __name__ = __main__:
+    main()
+"""
+"""

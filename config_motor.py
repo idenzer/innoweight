@@ -12,7 +12,7 @@ else:
 # set the limits
 odrv0.axis0.motor.config.current_lim = 10 # [A]
 odrv0.axis0.motor.config.current_lim_margin = 15
-odrv0.axis0.controller.config.vel_limit = 50 # [turns per second]
+odrv0.axis0.controller.config.vel_limit = 80 # [turns per second]
 odrv0.axis0.motor.config.calibration_current = 10 # [A]
 print("set the limits")
 

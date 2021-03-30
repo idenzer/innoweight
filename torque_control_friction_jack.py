@@ -6,6 +6,8 @@ deadband = 0.25 # [turns]
 target_torque = 0.2
 min_torque = 0
 
+friction_torque = 0.04
+
 def current_to_torque(current):
     return (current * Kt)
 
@@ -36,15 +38,23 @@ def main():
         try:
             pos_curr = odrv0.axis0.encoder.pos_estimate
             pos_error = pos_curr - pos_init
+            direction = 0
 
             if pos_error < 0:
                 odrv0.axis0.controller.input_torque = -min_torque
             elif pos_error < deadband:
                 odrv0.axis0.controller.input_torque = -pos_error * slope_torque
             else:
-                odrv0.axis0.controller.input_torque = -target_torque
+                if odrv0.axis0.encoder.vel_estimate > 0.05:
+                    direction = 1
+                elif odrv0.axis0.encoder.vel_estimate < -0.05:
+                    direction = -1
+                else:
+                    direction = 0
+                odrv0.axis0.controller.input_torque = -target_torque + direction * friction_torque
 
             print("Current torque: ", odrv0.axis0.controller.input_torque)
+            print("Current direction: ", direction)
         except:
             odrv0.axis0.requested_state = 1
             print("Exited program. Dumping errors.")

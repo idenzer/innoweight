@@ -39,8 +39,6 @@ def main():
             print("pos_error: ", pos_error)
             if pos_error < 0:
                 odrv0.axis0.controller.input_torque = min_torque
-            elif pos_error < deadband:
-                odrv0.axis0.controller.input_torque = pos_error * slope_torque
             else:
                 odrv0.axis0.controller.input_torque = target_torque
 

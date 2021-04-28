@@ -1,10 +1,13 @@
 import odrive
 import time
+from odrive.utils import *
 
 Kt = 8.27/150
 deadband = 0.5 # [turns]
-target_torque = 0.2
-min_torque = 0
+target_weight = 10 # [lb]
+weight_to_torque = 46.8 # [lb / N]
+target_torque = target_weight / weight_to_torque
+min_torque = 0 # [Nm]
 
 def current_to_torque(current):
     return (current * Kt)
@@ -26,7 +29,6 @@ def main():
         odrv0.axis0.requested_state = 6
         time.sleep(3)
 
-    odrv0.axis0.motor.config.current_lim = 10
     odrv0.axis0.controller.config.control_mode = 1 # torque control
     odrv0.axis0.requested_state = 8 # closed loop control
     pos_init = odrv0.axis0.encoder.pos_estimate
@@ -36,18 +38,17 @@ def main():
         try:
             pos_curr = odrv0.axis0.encoder.pos_estimate
             pos_error = -1* (pos_curr - pos_init)
-            print("pos_error: ", pos_error)
             if pos_error < 0:
-                odrv0.axis0.controller.input_torque = min_torque
+                odrv0.axis0.controller.input_torque = 0
             elif pos_error < deadband:
                 odrv0.axis0.controller.input_torque = pos_error * slope_torque
             else:
                 odrv0.axis0.controller.input_torque = target_torque
-
-            print("Current torque: ", odrv0.axis0.controller.input_torque)
+            print("Pos_error: %.2f turns. Input torque: %.2f Nm" % (pos_error, odrv0.axis0.controller.input_torque))
         except:
-            odrv0.axis0.requested_state = 1
             print("Exited program. Dumping errors.")
+            dump_errors(odrv0)
+            odrv0.axis0.requested_state = 1
             quit()
 
 if __name__ == '__main__':

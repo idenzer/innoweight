@@ -20,8 +20,10 @@ odrv0.config.max_regen_current = 0
 # set the limits
 odrv0.axis0.motor.config.current_lim = 20 # [A]
 odrv0.axis0.motor.config.current_lim_margin = 15
-odrv0.axis0.controller.config.vel_limit = 50 # [turns per second]
-odrv0.axis0.motor.config.calibration_current = 5 # [A]
+odrv0.axis0.controller.config.vel_limit = 80 # [turns per second]
+odrv0.axis0.motor.config.calibration_current = 10 # [A]
+print("set the limits")
+
 # set other hardware parameters
 odrv0.axis0.motor.config.pole_pairs = 7 
 odrv0.axis0.motor.config.torque_constant = 8.27 / 140 #control via amps instead of torque
